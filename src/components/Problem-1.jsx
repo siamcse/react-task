@@ -1,5 +1,5 @@
 import localforage from 'localforage';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Problem1 = () => {
     const [show, setShow] = useState('all');
