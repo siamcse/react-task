@@ -1,9 +1,11 @@
 import React from 'react';
 import ModalA from './ModalA';
 import { Button } from 'react-bootstrap';
+import ModalB from './ModalB';
 
 const Problem2 = () => {
-    const [modalShow, setModalShow] = React.useState(false);
+    const [modalAShow, setModalAShow] = React.useState(false);
+    const [modalBShow, setModalBShow] = React.useState(false);
 
     return (
 
@@ -13,16 +15,23 @@ const Problem2 = () => {
 
                 <div className="d-flex justify-content-center gap-3">
                     {/* <button className="btn btn-lg btn-outline-primary" >All Contacts</button> */}
-                    <Button variant="outline-primary" onClick={() => setModalShow(true)}>
+                    <Button variant="outline-primary" onClick={() => setModalAShow(true)}>
                         All Contacts
                     </Button>
-                    <button className="btn btn-outline-warning" type="button" >US Contacts</button>
+                    <Button variant="outline-warning" onClick={() => setModalBShow(true)}>
+                        US Contacts
+                    </Button>
                 </div>
                 
                 <ModalA
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
+                    show={modalAShow}
+                    onHide={() => setModalAShow(false)}
                 />
+                <ModalB
+                    show={modalBShow}
+                    onHide={() => setModalBShow(false)}
+                />
+                
             </div>
         </div>
     );

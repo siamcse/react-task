@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 
-const ModalA = (props) => {
+const ModalB = (props) => {
     const [isChecked, setIsChecked] = useState(false);
     const [contacts, setContacts] = useState([]);
     const [evenContacts, setEvenContacts] = useState([]);
@@ -10,8 +10,9 @@ const ModalA = (props) => {
         fetch('contacts.json')
             .then(res => res.json())
             .then(data => {
-                setContacts(data);
-                setEvenContacts(data);
+                const usContacts = data.filter(contact => contact.country.name ==='United States')
+                setContacts(usContacts);
+                setEvenContacts(usContacts);
             })
     }, [])
 
@@ -34,7 +35,6 @@ const ModalA = (props) => {
     const handleCheckboxChange = (event) => {
         setIsChecked(event.target.checked);
     };
-    console.log(contacts);
     return (
         <Modal
             {...props}
@@ -61,7 +61,7 @@ const ModalA = (props) => {
                         Only Even
                     </p>
                 </div>
-                <div className='mh-25' style={{maxHeight:'300px',overflowY:'auto'}}>
+                <div className='mh-25' style={{ maxHeight: '300px', overflowY: 'auto' }}>
                     <table className="table table-striped mh-25 overflow-scroll">
                         <thead>
                             <tr>
@@ -78,7 +78,7 @@ const ModalA = (props) => {
                                     <td>{contact.country.name}</td>
                                 </tr>)
                             }
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -90,4 +90,4 @@ const ModalA = (props) => {
     );
 };
 
-export default ModalA;
+export default ModalB;
