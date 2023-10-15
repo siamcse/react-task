@@ -8,6 +8,13 @@ const Problem1 = () => {
 
     const handleClick = (val) => {
         setShow(val);
+        if (val === 'all') {
+            setFilteredItems(task);
+        }
+        else {
+            const filterdItem = task.filter(t => t.status.toLowerCase().includes(val.toLowerCase()));
+            setFilteredItems(filterdItem);
+        }
     }
 
     useEffect(() => {
