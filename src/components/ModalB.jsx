@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import ModalC from './ModalC';
 
 const ModalB = (props) => {
     const [isChecked, setIsChecked] = useState(false);
     const [contacts, setContacts] = useState([]);
     const [evenContacts, setEvenContacts] = useState([]);
+    const [modalCShow, setModalCShow] = useState(false);
+    const [contact, setContact] = useState("");
 
     useEffect(() => {
         fetch('contacts.json')
@@ -15,6 +18,16 @@ const ModalB = (props) => {
                 setEvenContacts(usContacts);
             })
     }, [])
+
+    // useEffect(() => {
+    //     fetch(`https://contact.mediusware.com/api/contacts/?format=json`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log(data);
+    //             setContacts(data.results);
+    //             setEvenContacts(data.results);
+    //         })
+    // }, [])
 
     useEffect(() => {
         if (isChecked) {
@@ -44,7 +57,7 @@ const ModalB = (props) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Modal A
+                    Modal B
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body style={{ minHeight: '500px' }}>
@@ -72,9 +85,12 @@ const ModalB = (props) => {
                         </thead>
                         <tbody>
                             {
-                                evenContacts.map(contact => <tr key={contact.id}>
+                                evenContacts?.map(contact => <tr key={contact.id}>
                                     <td>{contact.id}</td>
-                                    <td>{contact.phone}</td>
+                                    <td onClick={() => {
+                                        setModalCShow(true)
+                                        setContact(contact.phone)
+                                    }}>{contact.phone}</td>
                                     <td>{contact.country.name}</td>
                                 </tr>)
                             }
@@ -82,6 +98,11 @@ const ModalB = (props) => {
                         </tbody>
                     </table>
                 </div>
+                <ModalC
+                    show={modalCShow}
+                    onHide={() => setModalCShow(false)}
+                    contact={contact}
+                />
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={props.onHide}>Close</Button>

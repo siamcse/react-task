@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import ModalC from './ModalC';
 
 const ModalA = (props) => {
     const [isChecked, setIsChecked] = useState(false);
     const [contacts, setContacts] = useState([]);
     const [evenContacts, setEvenContacts] = useState([]);
+    const [modalCShow, setModalCShow] = useState(false);
+    const [contact, setContact] = useState("");
 
     useEffect(() => {
         fetch('contacts.json')
@@ -14,6 +17,16 @@ const ModalA = (props) => {
                 setEvenContacts(data);
             })
     }, [])
+
+    // useEffect(() => {
+    //     fetch(`https://contact.mediusware.com/api/contacts/?format=json`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log(data);
+    //             setContacts(data.results);
+    //             setEvenContacts(data.results);
+    //         })
+    // }, [])
 
     useEffect(() => {
         if (isChecked) {
@@ -61,7 +74,7 @@ const ModalA = (props) => {
                         Only Even
                     </p>
                 </div>
-                <div className='mh-25' style={{maxHeight:'300px',overflowY:'auto'}}>
+                <div className='mh-25' style={{ maxHeight: '300px', overflowY: 'auto' }}>
                     <table className="table table-striped mh-25 overflow-scroll">
                         <thead>
                             <tr>
@@ -72,16 +85,24 @@ const ModalA = (props) => {
                         </thead>
                         <tbody>
                             {
-                                evenContacts.map(contact => <tr key={contact.id}>
+                                evenContacts?.map(contact => <tr key={contact.id}>
                                     <td>{contact.id}</td>
-                                    <td>{contact.phone}</td>
+                                    <td onClick={() => {
+                                        setModalCShow(true)
+                                        setContact(contact.phone)
+                                    }}>{contact.phone}</td>
                                     <td>{contact.country.name}</td>
                                 </tr>)
                             }
-                            
+
                         </tbody>
                     </table>
                 </div>
+                <ModalC
+                    show={modalCShow}
+                    onHide={() => setModalCShow(false)}
+                    contact={contact}
+                />
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={props.onHide}>Close</Button>
