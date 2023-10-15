@@ -77,7 +77,12 @@ const Problem1 = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            {
+                                filteredItems.map((item, i) => <tr key={i}>
+                                    <td>{item.name}</td>
+                                    <td>{item.status}</td>
+                                </tr>)
+                            }
                         </tbody>
                     </table>
                 </div>
